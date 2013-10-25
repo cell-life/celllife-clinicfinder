@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                      xmlns:json="http://www.milyn.org/xsd/smooks/json-1.1.xsd"
+                      xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.4.xsd">
+
+    <json:reader rootName="root"/>
+
+    <resource-config selector="/root/UssdSubmissionRequest">
+        <!-- <resource>org.milyn.delivery.DomModelCreator</resource>-->
+        <resource>org.celllife.clinicfinder.domain.ussd.MyDomModelCreator</resource>
+    </resource-config>
+
+    <!-- Java Beans -->
+
+    <jb:bean beanId="request"
+             class="org.celllife.clinicfinder.domain.ussd.Request"
+             createOnElement="UssdSubmissionRequest">
+        <jb:wiring property="user" beanIdRef="user"/>
+        <jb:wiring property="ussdRequest" beanIdRef="ussdRequest"/>
+        <jb:wiring property="locationData" beanIdRef="locationData"/>
+        <jb:wiring property="closestLandmarks" beanIdRef="closestLandmarks"/>
+        <jb:wiring property="smsText" beanIdRef="smsText"/>
+    </jb:bean>
+
+    <jb:bean beanId="ussdRequest"
+             class="org.celllife.clinicfinder.domain.ussd.UssdRequest"
+             createOnElement="ussdRequest">
+        <jb:value property="id" data="id"/>
+        <jb:value property="ussdString" data="ussdString"/>
+        <jb:value property="dateTime" data="dateTime" decoder="Date">
+            <jb:decodeParam name="format">yyyy-MM-dd HH:mm:ss</jb:decodeParam>
+        </jb:value>
+    </jb:bean>
+
+    <jb:bean beanId="user"
+             class="org.celllife.clinicfinder.domain.ussd.User"
+             createOnElement="user">
+        <jb:value property="msisdn" data="msisdn"/>
+        <jb:value property="mnoCode" data="mnoCode"/>
+    </jb:bean>
+
+    <jb:bean beanId="locationData"
+             class="org.celllife.clinicfinder.domain.ussd.LocationData"
+             createOnElement="locationData">
+        <jb:value property="xCoordinate" data="xCoordinate"/>
+        <jb:value property="yCoordinate" data="yCoordinate"/>
+    </jb:bean>
+
+    <jb:bean beanId="closestLandmarks"
+             class="java.util.ArrayList"
+             createOnElement="closestLandmarks">
+        <jb:wiring beanType="org.celllife.clinicfinder.domain.ussd.ClosestLandmark"/>
+    </jb:bean>
+
+    <jb:bean beanId="closestLandmark"
+             class="org.celllife.clinicfinder.domain.ussd.ClosestLandmark"
+             createOnElement="closestLandmark/element">
+    <jb:value property="locationName" data="locationName"/>
+    <jb:wiring property="request" beanIdRef="request"/>
+    </jb:bean>
+
+</smooks-resource-list>

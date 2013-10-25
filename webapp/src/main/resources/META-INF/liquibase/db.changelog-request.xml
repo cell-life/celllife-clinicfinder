@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet author="dine@cell-life.org" id="request-1">
+
+        <createTable tableName="request">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ussd_request_id" type="VARCHAR(255)" />
+            <column name="ussd_request_string" type="VARCHAR(15)" />
+            <column name="ussd_request_date_time" type="DATETIME" />
+            <column name="msisdn" type="VARCHAR(15)" />
+            <column name="mno_code" type="VARCHAR(63)" />
+            <column name="x_coordinate" type="DOUBLE" />
+            <column name="y_coordinate" type="DOUBLE" />
+            <column name="sms_text" type="VARCHAR(255)" />
+        </createTable>
+
+        <createTable tableName="closest_landmark">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="location_name" type="VARCHAR(63)"/>
+            <column name="request" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="request"
+                                 baseTableName="closest_landmark"
+                                 constraintName="closest_landmark_constraint1"
+                                 referencedColumnNames="id"
+                                 referencedTableName="closest_landmark"
+                                 referencesUniqueColumn="false"/>
+
+    </changeSet>
+
+</databaseChangeLog>
