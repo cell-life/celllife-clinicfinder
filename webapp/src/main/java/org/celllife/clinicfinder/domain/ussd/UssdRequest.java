@@ -8,8 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * USSD Session entity for the USSD endpoint. Contains details about the session
- * (times)
+ * USSD Session entity for the USSD endpoint.
  */
 @Embeddable
 public final class UssdRequest implements Serializable {
@@ -24,6 +23,14 @@ public final class UssdRequest implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
 
+    public UssdRequest() {
+    }
+
+    public UssdRequest(String id, String ussdString, Date dateTime) {
+        this.id = id;
+        this.ussdString = ussdString;
+        this.dateTime = dateTime;
+    }
 
 	public String getId() {
 		return id;

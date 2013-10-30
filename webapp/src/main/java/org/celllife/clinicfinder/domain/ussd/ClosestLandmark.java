@@ -14,6 +14,14 @@ public class ClosestLandmark {
 
     private String locationName;
 
+    public ClosestLandmark() {
+
+    }
+
+    public ClosestLandmark(String locationName) {
+        this.locationName = locationName;
+    }
+
     @ManyToOne
     @JoinColumn(name = "request")
     private Request request;

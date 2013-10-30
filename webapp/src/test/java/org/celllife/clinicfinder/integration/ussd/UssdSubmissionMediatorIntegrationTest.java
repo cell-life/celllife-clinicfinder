@@ -37,6 +37,11 @@ public class UssdSubmissionMediatorIntegrationTest {
     	Assert.assertNotNull(root);
     	Assert.assertNotNull(root.getUssdSubmissionRequest());
 
+        Assert.assertNotNull(root.getUssdSubmissionRequest().getUssdRequest());
+        Assert.assertEquals(root.getUssdSubmissionRequest().getUssdRequest().getUssdString(), "*130*555*1000#");
+        Assert.assertEquals(root.getUssdSubmissionRequest().getUssdRequest().getId(), "1");
+        Assert.assertEquals(root.getUssdSubmissionRequest().getUssdRequest().getDateTime().toString(), "Sun Jan 01 22:00:00 SAST 2012");
+
     	Assert.assertNotNull(root.getUssdSubmissionRequest().getUser());
     	Assert.assertEquals(root.getUssdSubmissionRequest().getUser().getMsisdn(), "27721234567");
     	Assert.assertEquals(root.getUssdSubmissionRequest().getUser().getMnoCode(), "1");

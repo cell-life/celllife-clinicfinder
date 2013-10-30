@@ -11,4 +11,23 @@
 
     <int:annotation-config/>
 
+    <int:channel id="aatRequestChannel"/>
+
+    <int:channel id="aatResponseChannel"/>
+
+    <int-http:inbound-gateway id="httpInbound"
+                              request-channel="aatRequestChannel"
+                              reply-channel="aatResponseChannel"
+                              name="/service/clinicfinderUssdSubmission"
+                              supported-methods="POST"/>
+
+    <int:service-activator id="clinicfinderUssdSubmissionIntegrationServiceActivator"
+                           input-channel="aatRequestChannel"
+                           output-channel="aatResponseChannel"
+                           ref="ussdSubmissionMediator"
+                           method="handleUssdSubmission"/>
+
+    <int-jdbc:message-store id="messageStore"
+                            data-source="dataSource"/>
+
 </beans>

@@ -12,7 +12,4 @@ import org.springframework.data.rest.repository.annotation.RestResource;
 @RestResource(path = "requests")
 public interface RequestRepository extends PagingAndSortingRepository<Request, Long> {
 
-    /*@QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value ="true") })
-    Iterable<Request> findByClinicCode(@Param("clinicCode") String clinicCode);*/
-
 }

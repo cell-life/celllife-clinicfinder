@@ -7,11 +7,7 @@ import java.util.List;
 /**
  * Root Entity model for the USSD session data received. It contains information about each interaction with
  * the USSD menu. 
- * 
- * This includes information about the session itself (the timestamps) and the user (msisdn), as well as the 
- * content consumed (i.e. page viewed) by the user during the session. The data displayed to the user in this
- * case is information about medical services, which are grouped by Theme. The user can opt to receive 
- * an SMS containing the information about a particular service.
+ *
  */
 @Entity
 @Cacheable

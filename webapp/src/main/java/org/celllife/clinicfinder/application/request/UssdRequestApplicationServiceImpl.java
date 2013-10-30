@@ -1,5 +1,6 @@
 package org.celllife.clinicfinder.application.request;
 
+import org.celllife.clinicfinder.domain.ussd.ClosestLandmark;
 import org.celllife.clinicfinder.domain.ussd.Request;
 import org.celllife.clinicfinder.domain.ussd.RequestRepository;
 import org.slf4j.Logger;
@@ -31,15 +32,26 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
 	
 	UssdSubmission convertToUssdPageVisits(Request request) {
 
+        String closestLandmarks = "";
+
 		UssdSubmission ussdSubmission = new UssdSubmission();
-        ussdSubmission.setId(request.getId());
+        ussdSubmission.setUssdRequestId(request.getUssdRequest().getId());
         ussdSubmission.setUssdString(request.getUssdRequest().getUssdString());
         ussdSubmission.setDateTime(request.getUssdRequest().getDateTime());
         ussdSubmission.setMsisdn(request.getUser().getMsisdn());
         ussdSubmission.setMnoCode(request.getUser().getMnoCode());
         ussdSubmission.setXCoordinate(request.getLocationData().getXCoordinate());
         ussdSubmission.setYCoordinate(request.getLocationData().getYCoordinate());
-        //ussdSubmission.setClosestLandmarks(request.getClosestLandmarks().toString());
+        ussdSubmission.setSmsText(request.getSmsText());
+
+        for (ClosestLandmark closestLandmark : request.getClosestLandmarks()) {
+            if (closestLandmarks.isEmpty()) {
+                closestLandmarks = closestLandmarks + closestLandmark.getLocationName();
+            } else {
+                closestLandmarks = closestLandmarks + ", " + closestLandmark.getLocationName();
+            }
+        }
+        ussdSubmission.setClosestLandmarks(closestLandmarks);
 
         return ussdSubmission;
 

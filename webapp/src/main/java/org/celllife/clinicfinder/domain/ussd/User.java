@@ -19,6 +19,15 @@ public final class User implements Serializable {
 	@Basic
 	private String mnoCode;
 
+    public User() {
+
+    }
+
+    public User(String msisdn, String mnoCode) {
+        this.msisdn = msisdn;
+        this.mnoCode = mnoCode;
+    }
+
 	public String getMsisdn() {
 		return msisdn;
 	}
