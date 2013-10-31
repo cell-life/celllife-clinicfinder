@@ -1,5 +1,8 @@
 package org.celllife.clinicfinder.domain.ussd;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -39,8 +42,10 @@ public class Request implements Serializable {
     })
 	private LocationData locationData;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "request")
-	private List<ClosestLandmark> closestLandmarks;
+    @Fetch(FetchMode.JOIN)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinColumn(name = "request")
+    private List<ClosestLandmark> closestLandmarks;
 
     private String smsText;
 
