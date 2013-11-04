@@ -1,10 +1,11 @@
 package org.celllife.clinicfinder.domain.ussd;
 
-import javax.persistence.*;
-import java.util.List;
+import java.io.Serializable;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
-public class ClosestLandmark {
+public class ClosestLandmark implements Serializable {
 
     private static final long serialVersionUID = 7564371005698654945L;
 

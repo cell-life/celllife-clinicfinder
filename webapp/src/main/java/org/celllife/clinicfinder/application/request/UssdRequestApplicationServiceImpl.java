@@ -27,7 +27,7 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
 			log.trace("converted Request into UssdPageVisits: "+ ussdSubmissions);
 		}
         ussdSubmissionRepository.save(ussdSubmissions);
-		return request;
+		return savedRequest;
 	}
 	
 	UssdSubmission convertToUssdPageVisits(Request request) {

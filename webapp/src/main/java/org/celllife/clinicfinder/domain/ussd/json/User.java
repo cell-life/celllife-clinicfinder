@@ -1,7 +1,5 @@
 package org.celllife.clinicfinder.domain.ussd.json;
 
-import javax.persistence.Basic;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 public final class User implements Serializable {
