@@ -24,7 +24,7 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
         Request savedRequest = requestRepository.save(request);
 		UssdSubmission ussdSubmissions = convertToUssdPageVisits(request);
 		if (log.isTraceEnabled()) {
-			log.trace("converted Request into UssdPageVisits: "+ ussdSubmissions);
+			log.trace("converted Request into UssdSubmission: "+ ussdSubmissions);
 		}
         ussdSubmissionRepository.save(ussdSubmissions);
 		return savedRequest;
