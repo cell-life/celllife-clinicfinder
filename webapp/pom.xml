@@ -70,7 +70,7 @@
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
                 <version>1.5</version>
-                <executions>
+<!--                <executions>
                     <execution>
                         <id>compile</id>
                         <goals>
@@ -86,6 +86,22 @@
                         <phase>test-compile</phase>
                     </execution>
                 </executions>
+-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>generateStubs</goal>
+                            <goal>testCompile</goal>
+                            <goal>generateTestStubs</goal>
+                        </goals>
+                        <configuration>
+                            <providerSelection>${java.version}</providerSelection>
+                            <tolerance>0</tolerance>
+                        </configuration>
+                    </execution>
+                </executions>
+
                 <dependencies>
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
@@ -205,6 +221,16 @@
     </build>
 
     <dependencies>
+    
+       	<!-- Communicate -->
+    	<dependency>
+    	    <groupId>org.celllife.mobilisr</groupId>
+			<artifactId>org.celllife.mobilisr.client</artifactId>
+        </dependency>
+    	<dependency>
+    	    <groupId>org.celllife.mobilisr</groupId>
+			<artifactId>org.celllife.mobilisr.api</artifactId>
+        </dependency>
 
         <!-- JodaTime -->
 

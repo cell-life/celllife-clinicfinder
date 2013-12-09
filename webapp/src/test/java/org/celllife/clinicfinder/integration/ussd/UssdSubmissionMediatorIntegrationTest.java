@@ -49,12 +49,6 @@ public class UssdSubmissionMediatorIntegrationTest {
         Assert.assertNotNull(root.getUssdSubmissionRequest().getLocationData());
         Assert.assertEquals(root.getUssdSubmissionRequest().getLocationData().getxCoordinate(), 28.0918827056885);
         Assert.assertEquals(root.getUssdSubmissionRequest().getLocationData().getyCoordinate(), -25.892427444458);
-
-        Assert.assertNotNull(root.getUssdSubmissionRequest().getClosestLandmarks());
-        Assert.assertEquals(root.getUssdSubmissionRequest().getClosestLandmarks().get(0).getLocationName(),"Pontshong (Walkerville) Clinic");
-
-        Assert.assertNotNull(root.getUssdSubmissionRequest().getSmsText());
-        Assert.assertEquals(root.getUssdSubmissionRequest().getSmsText(),"Thank you. Nearest clinics: Pontshong (Walkerville) Clinic 0214611124, Thula Mntwana Clinic 0214609269.");
     }
     
     @Test
@@ -73,11 +67,5 @@ public class UssdSubmissionMediatorIntegrationTest {
         Assert.assertNotNull(request.getLocationData());
         Assert.assertEquals(request.getLocationData().getXCoordinate(), 28.0918827056885);
         Assert.assertEquals(request.getLocationData().getYCoordinate(), -25.892427444458);
-
-        Assert.assertNotNull(request.getClosestLandmarks());
-        Assert.assertEquals(request.getClosestLandmarks().get(0).getLocationName(),"Pontshong (Walkerville) Clinic");
-
-        Assert.assertEquals(request.getSmsText(),"Thank you. Nearest clinics: Pontshong (Walkerville) Clinic 0214611124, Thula Mntwana Clinic 0214609269.");
-
     }
 }
