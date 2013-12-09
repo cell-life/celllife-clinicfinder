@@ -1,10 +1,13 @@
 package org.celllife.clinicfinder.integration.ussd;
 
+import java.io.IOException;
+
+import org.celllife.clinicfinder.application.ClinicFinderApplicationService;
 import org.celllife.clinicfinder.application.request.UssdRequestApplicationService;
+import org.celllife.clinicfinder.domain.ussd.LocationData;
 import org.celllife.clinicfinder.domain.ussd.Request;
 import org.celllife.clinicfinder.domain.ussd.User;
 import org.celllife.clinicfinder.domain.ussd.UssdRequest;
-import org.celllife.clinicfinder.domain.ussd.LocationData;
 import org.celllife.clinicfinder.domain.ussd.json.Root;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -14,17 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.Message;
 import org.springframework.integration.message.GenericMessage;
 
-import java.io.IOException;
-
 @org.springframework.stereotype.Service("ussdSubmissionMediator")
 public class UssdSubmissionMediator {
 	
 	private static Logger log = LoggerFactory.getLogger(UssdSubmissionMediator.class);
 
     public static final String HAPPY_RESULT = "{ \"UssdSubmissionResponse\": { \"message\": \"Completed Successfully\" } }";
+    
+    public static final String SMS_TEXT = "${clinic.sms.text}";
 
     @Autowired
     private UssdRequestApplicationService ussdRequestApplicationService;
+    
+    @Autowired
+    private ClinicFinderApplicationService clinicFinderApplicationService;
 
     public Message<String> handleUssdSubmission(Message<byte[]> message) throws JsonProcessingException, IOException {
     	String payload = new String(message.getPayload());
@@ -37,6 +43,7 @@ public class UssdSubmissionMediator {
 		if (log.isDebugEnabled()) {
     		log.debug("ussd submission request object: "+request);
     	}
+		clinicFinderApplicationService.findClinicAndSendSms(request);
 		return new GenericMessage<>(HAPPY_RESULT);
     }
     
@@ -64,12 +71,7 @@ public class UssdSubmissionMediator {
         request.setLocationData(locationData);
         locationData.setXCoordinate(root.getUssdSubmissionRequest().getLocationData().getxCoordinate());
         locationData.setYCoordinate(root.getUssdSubmissionRequest().getLocationData().getyCoordinate());
-
-        request.setClosestLandmarks(root.getUssdSubmissionRequest().getClosestLandmarks());
-
-        request.setSmsText(root.getUssdSubmissionRequest().getSmsText());
     	
     	return request;
     }
-
 }

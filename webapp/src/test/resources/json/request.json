@@ -1,26 +1,17 @@
 {
     "ussdSubmissionRequest": {
-    "ussdRequest": {
-        "id": "1",
-        "ussdString": "*130*555*1000#",
-        "dateTime": "2012-01-01T20:00:00"
-    },
-    "user": {
-        "msisdn": "27721234567",
-        "mnoCode": "1"
-    },
-    "locationData": {
-        "xCoordinate": "28.0918827056885",
-        "yCoordinate": "-25.892427444458"
-    },
-    "closestLandmarks": [
-        {
-            "locationName":"Pontshong (Walkerville) Clinic"
-        },
-        {
-            "locationName":"Thula Mntwana Clinic"
-        }
-    ],
-    "smsText" : "Thank you. Nearest clinics: Pontshong (Walkerville) Clinic 0214611124, Thula Mntwana Clinic 0214609269."
+	    "ussdRequest": {
+	        "id": "1",
+	        "ussdString": "*130*555*1000#",
+	        "dateTime": "2012-01-01T20:00:00"
+	    },
+	    "user": {
+	        "msisdn": "27721234567",
+	        "mnoCode": "1"
+	    },
+	    "locationData": {
+	        "xCoordinate": "28.0918827056885",
+	        "yCoordinate": "-25.892427444458"
+	    }
     }
 }

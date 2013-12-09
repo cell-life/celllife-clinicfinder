@@ -1,11 +1,16 @@
 package org.celllife.clinicfinder.domain.ussd;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Root Entity model for the USSD session data received. It contains information about each interaction with
@@ -42,13 +47,6 @@ public class Request implements Serializable {
     })
 	private LocationData locationData;
 
-    @Fetch(FetchMode.JOIN)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinColumn(name = "request")
-    private List<ClosestLandmark> closestLandmarks;
-
-    private String smsText;
-
 	public Long getId() {
 		return id;
 	}
@@ -81,26 +79,9 @@ public class Request implements Serializable {
         this.locationData = locationData;
     }
 
-    public List<ClosestLandmark> getClosestLandmarks() {
-        return closestLandmarks;
-    }
-
-    public void setClosestLandmarks(List<ClosestLandmark> closestLandMarks) {
-        this.closestLandmarks = closestLandMarks;
-    }
-
-    public String getSmsText() {
-        return smsText;
-    }
-
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
-
     @Override
 	public String toString() {
 		return "Request [id=" + id + ", ussdRequest=" + ussdRequest + ", user="
-				+ user + ", locationData=" + locationData + ", closestLandmarks=" + closestLandmarks
-				+ ", smsText=" + smsText + "]";
+				+ user + ", locationData=" + locationData + "]";
 	}
 }

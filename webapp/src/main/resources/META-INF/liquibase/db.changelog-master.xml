@@ -7,7 +7,7 @@
 
     <include file="db.changelog-hibernate.xml" relativeToChangelogFile="true"/>
 
-    <include file="db.changelog-ussdsubmission.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-ussdclinicfinder.xml" relativeToChangelogFile="true"/>
     <include file="db.changelog-request.xml" relativeToChangelogFile="true"/>
 
     <!-- Cross Domain Constraints -->

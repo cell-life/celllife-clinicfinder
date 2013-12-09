@@ -3,8 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <changeSet author="dine@cell-life.org" id="ussdsubmission-1">
-        <createTable tableName="ussd_submission">
+    <changeSet author="dine@cell-life.org" id="ussdclinicfinder-1">
+        <createTable tableName="ussd_clinic_finder">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -15,7 +15,10 @@
             <column name="mno_code" type="VARCHAR(63)" />
             <column name="x_coordinate" type="DOUBLE" />
             <column name="y_coordinate" type="DOUBLE" />
-            <column name="closest_landmarks" type="VARCHAR(255)" />
+            <column name="closest_clinic_name" type="VARCHAR(100)" />
+            <column name="closest_clinic_id" type="VARCHAR(50)" />
+            <column name="province_name" type="VARCHAR(100)" />
+            <column name="district_name" type="VARCHAR(100)" />
             <column name="sms_text" type="VARCHAR(255)" />
         </createTable>
     </changeSet>

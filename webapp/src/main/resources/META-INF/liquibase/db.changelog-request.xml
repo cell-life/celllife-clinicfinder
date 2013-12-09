@@ -16,20 +16,7 @@
             <column name="mno_code" type="VARCHAR(63)" />
             <column name="x_coordinate" type="DOUBLE" />
             <column name="y_coordinate" type="DOUBLE" />
-            <column name="sms_text" type="VARCHAR(255)" />
         </createTable>
-
-        <createTable tableName="request_closest_landmarks">
-            <column name="location_name" type="VARCHAR(63)"/>
-            <column name="request" type="BIGINT"/>
-        </createTable>
-
-        <addForeignKeyConstraint baseColumnNames="request"
-                                 baseTableName="request_closest_landmarks"
-                                 constraintName="FKBA823BE6A55C3903"
-                                 referencedColumnNames="id"
-                                 referencedTableName="request"
-                                 referencesUniqueColumn="false"/>
 
     </changeSet>
 

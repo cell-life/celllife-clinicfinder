@@ -18,8 +18,6 @@
         <jb:wiring property="user" beanIdRef="user"/>
         <jb:wiring property="ussdRequest" beanIdRef="ussdRequest"/>
         <jb:wiring property="locationData" beanIdRef="locationData"/>
-        <jb:wiring property="closestLandmarks" beanIdRef="closestLandmarks"/>
-        <jb:wiring property="smsText" beanIdRef="smsText"/>
     </jb:bean>
 
     <jb:bean beanId="ussdRequest"
@@ -44,19 +42,6 @@
              createOnElement="locationData">
         <jb:value property="xCoordinate" data="xCoordinate"/>
         <jb:value property="yCoordinate" data="yCoordinate"/>
-    </jb:bean>
-
-    <jb:bean beanId="closestLandmarks"
-             class="java.util.ArrayList"
-             createOnElement="closestLandmarks">
-        <jb:wiring beanType="org.celllife.clinicfinder.domain.ussd.ClosestLandmark"/>
-    </jb:bean>
-
-    <jb:bean beanId="closestLandmark"
-             class="org.celllife.clinicfinder.domain.ussd.ClosestLandmark"
-             createOnElement="closestLandmark/element">
-    <jb:value property="locationName" data="locationName"/>
-    <jb:wiring property="request" beanIdRef="request"/>
     </jb:bean>
 
 </smooks-resource-list>

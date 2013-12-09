@@ -1,11 +1,9 @@
 package org.celllife.clinicfinder.domain.ussd.json;
 
-import org.celllife.clinicfinder.domain.ussd.ClosestLandmark;
+import java.io.Serializable;
+
 import org.celllife.clinicfinder.domain.ussd.User;
 import org.celllife.clinicfinder.domain.ussd.UssdRequest;
-
-import java.io.Serializable;
-import java.util.List;
 
 public class UssdSubmissionRequest implements Serializable {
 
@@ -17,19 +15,13 @@ public class UssdSubmissionRequest implements Serializable {
 
     private LocationData locationData;
 
-    private List<ClosestLandmark> closestLandmarks;
-
-    private String smsText;
-
 	public UssdSubmissionRequest() {
 	}
 
-    public UssdSubmissionRequest(UssdRequest ussdRequest, User user, LocationData locationData, List<ClosestLandmark> closestLandmarks, String smsText) {
+    public UssdSubmissionRequest(UssdRequest ussdRequest, User user, LocationData locationData) {
         this.ussdRequest = ussdRequest;
         this.user = user;
         this.locationData = locationData;
-        this.closestLandmarks = closestLandmarks;
-        this.smsText = smsText;
     }
 
     public UssdRequest getUssdRequest() {
@@ -56,26 +48,9 @@ public class UssdSubmissionRequest implements Serializable {
         this.locationData = locationData;
     }
 
-    public List<ClosestLandmark> getClosestLandmarks() {
-        return closestLandmarks;
-    }
-
-    public void setClosestLandmarks(List<ClosestLandmark> closestLandmarks) {
-        this.closestLandmarks = closestLandmarks;
-    }
-
-    public String getSmsText() {
-        return smsText;
-    }
-
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
-
     @Override
     public String toString() {
         return "Request [ussdRequest=" + ussdRequest + ", user="
-                + user + ", locationData=" + locationData + ", closestLandmarks=" + closestLandmarks
-                + ", smsText=" + smsText + "]";
+                + user + ", locationData=" + locationData + "]";
     }
 }

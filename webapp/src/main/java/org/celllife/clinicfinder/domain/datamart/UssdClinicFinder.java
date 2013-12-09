@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Cacheable
-public class UssdSubmission {
+public class UssdClinicFinder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -34,24 +34,28 @@ public class UssdSubmission {
     private Double xCoordinate;
 
     private Double yCoordinate;
-
-    private String closestLandmarks;
-
+    
+    private String closestClinicName;
+    
+    private String closestClinicId;
+    
+    private String provinceName;
+    
+    private String districtName;
+    
     private String smsText;
 
-    public UssdSubmission() {
+    public UssdClinicFinder() {
 
     }
 
-    public UssdSubmission(String ussdRequestId, Date dateTime, String msisdn, String mnoCode, Double xcoordinate, Double ycoordinate, String closestLandmarks, String smsText) {
+    public UssdClinicFinder(String ussdRequestId, Date dateTime, String msisdn, String mnoCode, Double xcoordinate, Double ycoordinate) {
         this.ussdRequestId = ussdRequestId;
         this.dateTime = dateTime;
         this.msisdn = msisdn;
         this.mnoCode = mnoCode;
         this.xCoordinate = xcoordinate;
         this.yCoordinate = ycoordinate;
-        this.closestLandmarks = closestLandmarks;
-        this.smsText = smsText;
     }
 
     public Long getId() {
@@ -118,29 +122,44 @@ public class UssdSubmission {
         this.yCoordinate = ycoordinate;
     }
 
-    public String getClosestLandmarks() {
-        return closestLandmarks;
-    }
+	public String getClosestClinicName() {
+		return closestClinicName;
+	}
 
-    public void setClosestLandmarks(String closestLandmarks) {
-        this.closestLandmarks = closestLandmarks;
-    }
+	public void setClosestClinicName(String closestClinicName) {
+		this.closestClinicName = closestClinicName;
+	}
 
-    public String getSmsText() {
-        return smsText;
-    }
+	public String getClosestClinicId() {
+		return closestClinicId;
+	}
 
-    public void setSmsText(String smsText) {
-        this.smsText = smsText;
-    }
+	public void setClosestClinicId(String closestClinicId) {
+		this.closestClinicId = closestClinicId;
+	}
 
-    /*@Override
-	public String toString() {
-		return "UssdPageVisit [id=" + id + ", ussdSessionId=" + ussdSessionId
-				+ ", date=" + date + ", msisdn=" + msisdn + ", mnoCode="
-				+ mnoCode + ", contentVersion=" + contentVersion
-				+ ", serviceId=" + serviceId + ", serviceTitle=" + serviceTitle
-				+ ", smsId=" + smsId + ", themeId=" + themeId + ", themeTitle="
-				+ themeTitle + "]";
-	}*/
+	public String getSmsText() {
+		return smsText;
+	}
+
+	public void setSmsText(String smsText) {
+		this.smsText = smsText;
+	}
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getDistrictName() {
+		return districtName;
+	}
+
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
+
 }

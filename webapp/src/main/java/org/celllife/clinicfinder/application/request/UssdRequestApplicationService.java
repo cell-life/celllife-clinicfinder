@@ -8,7 +8,7 @@ import org.celllife.clinicfinder.domain.ussd.Request;
 public interface UssdRequestApplicationService {
 	
 	/**
-	 * Persists the Request object into the storage 
+	 * Persists the Request object into the storage and also creates an entry in the datamart table
 	 * @param request Request object to save 
 	 * @return Request object, saved (with ids)
 	 */
