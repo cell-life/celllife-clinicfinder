@@ -23,18 +23,12 @@
         <security:custom-filter position="CAS_FILTER" ref="casFilter"/>
     </security:http>
     
-      <security:http authentication-manager-ref="httpBasicAuthenticationManager"
-                   auto-config="true"
-                   use-expressions="true"
-                   pattern="/resources	/**">
-        <security:intercept-url pattern="/resources/**" access="isAnonymous()"/>
-        </security:http>
+    <security:http pattern="/resources/**" security='none' />
 
     <security:http authentication-manager-ref="casAuthenticationManager"
                    entry-point-ref="casEntryPoint"
                    auto-config="true"
                    use-expressions="true">
-
         <security:intercept-url pattern="/**" access="isAuthenticated()"/>
         <security:intercept-url pattern="/**" access="hasRole('ROLE_CLINICFINDER')" />
 
