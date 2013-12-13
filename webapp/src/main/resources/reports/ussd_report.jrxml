@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ussd_report" language="groovy" pageWidth="1500" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="1460" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="net.sf.jasperreports.print.keep.full.text" value="true"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="1209"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal" class="java.util.Calendar" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Calendar.getInstance()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="start_date" class="java.util.Date">
+		<defaultValueExpression><![CDATA[(  $P{cal}.set(Calendar.DAY_OF_MONTH, $P{cal}.getActualMinimum(Calendar.DAY_OF_MONTH)) ) ? null : $P{cal}.getTime()]]></defaultValueExpression>
+	</parameter>
+	<parameter name="end_date" class="java.util.Date">
+		<defaultValueExpression><![CDATA[(  $P{cal}.set(Calendar.DAY_OF_MONTH, $P{cal}.getActualMaximum(Calendar.DAY_OF_MONTH)) ) ? null : $P{cal}.getTime()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+ ussd_request_id, ussd_string, DATE_FORMAT(date_time,'%d/%m/%Y %H:%m') as 'date_time', msisdn, mno_code, x_coordinate, y_coordinate,
+ closest_clinic_name, province_name, district_name, sms_text
+FROM
+  ussd_clinic_finder
+WHERE
+ date_time between $P{start_date} and $P{end_date};]]>
+	</queryString>
+	<field name="ussd_request_id" class="java.lang.String"/>
+	<field name="ussd_string" class="java.lang.String"/>
+	<field name="date_time" class="java.lang.String"/>
+	<field name="msisdn" class="java.lang.String"/>
+	<field name="mno_code" class="java.lang.String"/>
+	<field name="x_coordinate" class="java.lang.Number"/>
+	<field name="y_coordinate" class="java.lang.Number"/>
+	<field name="closest_clinic_name" class="java.lang.String"/>
+	<field name="province_name" class="java.lang.String"/>
+	<field name="district_name" class="java.lang.String"/>
+	<field name="sms_text" class="java.lang.String"/>
+	<variable name="mobile_network" class="java.lang.String">
+		<variableExpression><![CDATA[($F{mno_code}.equals('1') ? 'VODACOM' : ($F{mno_code}.equals('2') ? 'MTN' : ($F{mno_code}.equals('3') ? 'Cell C/Virgin/Red Bull Mobile' : ($F{mno_code}.equals('4') ? 'Telkom Mobile' : 'Unknown'))))]]></variableExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="0" width="50" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[USSD Session ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="0" width="70" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[USSD string]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="0" width="130" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="0" width="101" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Msisdn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="0" width="50" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Mobile network]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="402" y="0" width="50" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[x_coordinate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="0" width="50" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[y_coordinate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="502" y="0" width="180" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Closest Clinic]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="682" y="0" width="161" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Province]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="843" y="0" width="267" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[District]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1110" y="0" width="350" height="47" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<text><![CDATA[Sms]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="112" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="50" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ussd_request_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="51" y="0" width="70" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ussd_string}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="121" y="0" width="129" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{date_time}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="251" y="0" width="101" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{msisdn}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="352" y="0" width="50" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{mobile_network}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="402" y="0" width="50" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{x_coordinate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="452" y="0" width="50" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{y_coordinate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="502" y="0" width="180" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{closest_clinic_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="682" y="0" width="161" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{province_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="843" y="0" width="267" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{district_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1110" y="0" width="350" height="93" isPrintWhenDetailOverflows="true"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sms_text}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -6,13 +6,17 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>TITLE</title>
+    <title>Clinic Finder</title>
 
     <c:set var="url">${pageContext.request.requestURL}</c:set>
     <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.request.contextPath}/" />
 
-    <link href="resources/css/bootstrap-3.0.0.min.css" rel="stylesheet" media="screen">
-    <link href="resources/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-3.0.2.css" rel="stylesheet" media="screen">
+    <link href="resources/css/bootstrap-theme-3.0.2.css" rel="stylesheet">
+
+    <script type="text/javascript" src="resources/js/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="resources/js/jquery-ui-1.9.1.min.js"></script>
+    <script type="text/javascript" src="resources/js/bootstrap-3.0.2.js"></script>
 </head>
 <body>
 
@@ -21,24 +25,33 @@
     <div class="masthead">
         <ul class="nav nav-pills pull-right">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
             <li><a href="j_spring_cas_security_logout">Logout</a>
         </ul>
          <h2><img src="resources/img/logo.png"></h2>
-        <h3 class="muted">HEADING</h3>
+        <h3 class="muted">Clinic Finder</h3>
     </div>
 
     <hr>
 
-    <h1>Reports</h1>
+    <h3>Select a Report</h3>
+    <br>
 
-    <p>
-    <ul>
-        <li>Future Report Here</li>
-        <li>Future Report Here</li>
-    </ul>
-    </p>
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <c:forEach items="${reports}" var="report">
+                <a href="#${report.id}" class="active reportLink">
+                    <h4>${report.label}</h4>
+                </a>
+            </c:forEach>
+
+        </div>
+
+        <div class="col-md-8 form">
+
+        </div>
+    </div>
 
     <hr>
 
@@ -47,6 +60,34 @@
     </div>
 
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $(".reportLink").click(function () {
+
+            var reportId = $(this).attr('href') + '';
+            reportId = reportId.replace('#', '');
+
+            $.get(
+                    "service/getHtml",
+                    {reportId: reportId},
+                    function (data) {
+                        $(".form").html(data);
+
+                        $(".form").on('submit', function (e) {
+                            e.preventDefault();
+                            window.location = "service/csvReport" + "?reportId=" + reportId + "&" + $("form").serialize();
+                        });
+                    }
+            );
+
+        });
+
+    });
+
+
+</script>
 
 </body>
 </html>

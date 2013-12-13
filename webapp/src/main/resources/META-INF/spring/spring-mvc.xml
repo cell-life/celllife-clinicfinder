@@ -9,6 +9,7 @@
     <mvc:annotation-driven/>
 
     <!--Tell the servlet where to look for annotated methods-->
+    <context:component-scan base-package="org.celllife.reporting.framework.interfaces.web"/>
     <context:component-scan base-package="org.celllife.clinicfinder.interfaces.web"/>
     <context:component-scan base-package="org.celllife.clinicfinder.interfaces.service"/>
 
