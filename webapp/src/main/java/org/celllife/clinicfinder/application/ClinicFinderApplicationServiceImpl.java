@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,34 +37,19 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 	MessageSource messageSource;
 
 	@Override
-	//@Async
+	@Async("defaultTaskExecutor")
 	public void findClinicAndSendSms(Request request) {
-		// Execute in a background task
-		SimpleAsyncTaskExecutor sate = new SimpleAsyncTaskExecutor();
-		sate.createThread(new ClinicTask(request));
-	}
-	
-	class ClinicTask implements Runnable {
-		Request request;
+		// get the clinic
+		Clinic clinic = getNearestClinic(request);
+
+		// get the message to send
+		String smsText = getSmsText(clinic);
 		
-		public ClinicTask(Request request) {
-			this.request = request;
-		}
-
-		@Override
-		public void run() {
-			// get the clinic
-			Clinic clinic = getNearestClinic(request);
-
-			// get the message to send
-			String smsText = getSmsText(clinic);
-			
-			// store the new data in the datamart for reporting purposes
-			updateUssdClinicFinder(request, clinic, smsText);
-			
-			// send an SMS
-			sendSms(request, smsText);
-		}
+		// store the new data in the datamart for reporting purposes
+		updateUssdClinicFinder(request, clinic, smsText);
+		
+		// send an SMS
+		sendSms(request, smsText);
 	}
 	
 	Clinic getNearestClinic(Request request) {
@@ -91,7 +76,7 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 		datamart.setProvinceName(clinic.getProvinceName());
 		datamart.setDistrictName(clinic.getDistrictName());
 		datamart.setSmsText(smsText);
-		ussdClinicFinderRepository.save(datamart);		
+		ussdClinicFinderRepository.save(datamart);
 	}
 	
 	void sendSms(Request request, String smsText) {
@@ -108,5 +93,21 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 			log.error("Could not send an SMS to '"+msisdn+"'.",e);
 		}
 		log.debug("findClinicAndSendSms [end]. Should have sent SMS '"+smsText+"' to msisdn '"+msisdn+"'.");
+	}
+
+	public void setCommunicateClient(MobilisrClient communicateClient) {
+		this.communicateClient = communicateClient;
+	}
+
+	public void setClinicService(ClinicServiceApplicationService clinicService) {
+		this.clinicService = clinicService;
+	}
+
+	public void setUssdClinicFinderRepository(UssdClinicFinderRepository ussdClinicFinderRepository) {
+		this.ussdClinicFinderRepository = ussdClinicFinderRepository;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
 	}
 }
