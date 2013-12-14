@@ -154,7 +154,7 @@ WHERE
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="843" y="0" width="267" height="93" isPrintWhenDetailOverflows="true"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$V{district_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{district_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="1110" y="0" width="350" height="93" isPrintWhenDetailOverflows="true"/>
