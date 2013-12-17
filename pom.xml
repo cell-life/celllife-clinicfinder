@@ -19,7 +19,6 @@
         <spring-integration.version>2.2.1.RELEASE</spring-integration.version>
         <spring-security.version>3.1.0.RELEASE</spring-security.version>
         <jasperreports.version>5.5.0</jasperreports.version>
-        <jenkins>test</jenkins>
     </properties>
 
     <build>
