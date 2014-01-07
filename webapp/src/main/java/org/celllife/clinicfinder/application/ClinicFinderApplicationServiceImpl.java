@@ -61,8 +61,8 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 	}
 	
 	String getSmsText(Clinic clinic) {
-		String phone = (clinic.getAddress() == null || clinic.getAddress().trim().isEmpty() ? "unknown" : clinic.getAddress());
-		String address = (clinic.getPhoneNumber() == null || clinic.getPhoneNumber().trim().isEmpty() ? "unknown" : clinic.getPhoneNumber());
+		String address = (clinic.getAddress() == null || clinic.getAddress().trim().isEmpty() ? "Unknown address" : clinic.getAddress());
+		String phone = (clinic.getPhoneNumber() == null || clinic.getPhoneNumber().trim().isEmpty() ? "Unknown telephone number" : clinic.getPhoneNumber());
 		String[] args = new String[] { clinic.getName(), address, phone };
 		String smsText = messageSource.getMessage("clinicSmsText", args, null, null);
 		log.debug("SmsText="+smsText);
@@ -85,7 +85,7 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 		contact.setMsisdn(msisdn);
 		List<ContactDto> contacts = new ArrayList<ContactDto>();
 		contacts.add(contact);
-		String campaignName = "ClinicFinder"+new Date()+"-"+msisdn;
+		String campaignName = "ClinicFinder "+new Date()+"-"+msisdn;
 		String campaignDescription = "ClinicFinder JustSendSMS to "+msisdn;
 		try {
 			communicateClient.getCampaignService().createNewCampaign(campaignName, campaignDescription, smsText, contacts);
