@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 /**
  * Root Entity model for the USSD session data received. It contains information about each interaction with
@@ -24,7 +25,15 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = 2447706927325734934L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+    @TableGenerator(
+            name="RequestIdGen", 
+            table="hibernate_sequences", 
+            pkColumnName="sequence_name", 
+            valueColumnName="sequence_next_hi_value", 
+            pkColumnValue="request",
+            initialValue=1,
+            allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="RequestIdGen")
 	private Long id;
 
 	@Embedded

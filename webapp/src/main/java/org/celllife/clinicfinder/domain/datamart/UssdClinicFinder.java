@@ -1,6 +1,7 @@
 package org.celllife.clinicfinder.domain.datamart;
 
 import javax.persistence.*;
+
 import java.util.Date;
 
 /**
@@ -13,7 +14,15 @@ import java.util.Date;
 public class UssdClinicFinder {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @TableGenerator(
+            name="UssdClinicFinderIdGen", 
+            table="hibernate_sequences", 
+            pkColumnName="sequence_name", 
+            valueColumnName="sequence_next_hi_value", 
+            pkColumnValue="ussd_clinic_finder",
+            initialValue=1,
+            allocationSize=1)
+    @GeneratedValue(strategy=GenerationType.TABLE, generator="UssdClinicFinderIdGen")
     private Long id;
 
     @Basic(optional=false)
