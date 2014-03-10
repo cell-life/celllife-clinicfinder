@@ -39,17 +39,23 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 	@Override
 	@Async("defaultTaskExecutor")
 	public void findClinicAndSendSms(Request request) {
-		// get the clinic
-		Clinic clinic = getNearestClinic(request);
-
-		// get the message to send
-		String smsText = getSmsText(clinic);
-		
-		// store the new data in the datamart for reporting purposes
-		updateUssdClinicFinder(request, clinic, smsText);
-		
-		// send an SMS
-		sendSms(request, smsText);
+		try {
+			// get the clinic
+			Clinic clinic = getNearestClinic(request);
+	
+			// get the message to send
+			String smsText = getSmsText(clinic);
+			
+			// store the new data in the datamart for reporting purposes
+			updateUssdClinicFinder(request, clinic, smsText);
+			
+			// send an SMS
+			sendSms(request, smsText);
+		} catch (Throwable t) {
+			// catch to log
+			log.error("An error occurred while trying to find the clinic and send the SMS. Error: "+t.getMessage(), t);
+			throw t;
+		}
 	}
 	
 	Clinic getNearestClinic(Request request) {
