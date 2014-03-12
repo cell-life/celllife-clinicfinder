@@ -43,7 +43,9 @@ public class UssdSubmissionMediator {
 		if (log.isDebugEnabled()) {
     		log.debug("ussd submission request object: "+request);
     	}
-		clinicFinderApplicationService.findClinicAndSendSms(request);
+		if (request != null) {
+			clinicFinderApplicationService.findClinicAndSendSms(request);
+		}
 		return new GenericMessage<>(HAPPY_RESULT);
     }
     

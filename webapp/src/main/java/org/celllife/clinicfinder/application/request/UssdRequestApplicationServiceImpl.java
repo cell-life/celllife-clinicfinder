@@ -21,13 +21,39 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
 
 	@Override
 	public Request save(Request request) {
-        Request savedRequest = requestRepository.save(request);
+		Request saveRequest = request;
+		Request duplicateRequest = getDuplicateRequest(request);
+		if (duplicateRequest != null) {
+			if (duplicateRequest.getLocationData().equals(request.getLocationData())) {
+				return null;
+			}
+			saveRequest = duplicateRequest;
+			saveRequest.getLocationData().setXCoordinate(request.getLocationData().getXCoordinate());
+			saveRequest.getLocationData().setYCoordinate(request.getLocationData().getYCoordinate());
+		}
+		if (duplicateRequest != null) {
+			
+		}
+        Request savedRequest = requestRepository.save(saveRequest);
 		UssdClinicFinder ussdClinicFinder = convertToUssdClinicFinder(request);
 		if (log.isTraceEnabled()) {
 			log.trace("converted Request into UssdClinicFinder: "+ ussdClinicFinder);
 		}
         ussdClinicFinderRepository.save(ussdClinicFinder);
 		return savedRequest;
+	}
+
+	Request getDuplicateRequest(Request request) {
+		Request duplicateRequest = null;
+		try {
+			duplicateRequest = requestRepository.findOneByUssdRequestId(request.getUssdRequest().getId());
+			if (duplicateRequest != null) {
+				log.warn("Ignoring this request because one already exists with the same ussd_request_id. "+request);
+			}
+		} catch (Exception e) {
+			log.warn("Could not find duplicate requests with ussd session id '"+request.getUssdRequest().getId()+"' due to error '"+e.getMessage()+"'");
+		}
+		return duplicateRequest;
 	}
 	
 	UssdClinicFinder convertToUssdClinicFinder(Request request) {
