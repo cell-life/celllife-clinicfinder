@@ -31,15 +31,15 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
 			saveRequest.getLocationData().setXCoordinate(request.getLocationData().getXCoordinate());
 			saveRequest.getLocationData().setYCoordinate(request.getLocationData().getYCoordinate());
 		}
-		if (duplicateRequest != null) {
-			
-		}
         Request savedRequest = requestRepository.save(saveRequest);
 		UssdClinicFinder ussdClinicFinder = convertToUssdClinicFinder(request);
-		if (log.isTraceEnabled()) {
-			log.trace("converted Request into UssdClinicFinder: "+ ussdClinicFinder);
+		UssdClinicFinder duplicateUssdClinicFinder = getDuplicateUssdClinicFinder(ussdClinicFinder);
+		if (duplicateUssdClinicFinder != null) {
+			if (log.isTraceEnabled()) {
+				log.trace("converted Request into UssdClinicFinder: "+ ussdClinicFinder);
+			}
+			ussdClinicFinderRepository.save(ussdClinicFinder);
 		}
-        ussdClinicFinderRepository.save(ussdClinicFinder);
 		return savedRequest;
 	}
 
@@ -54,6 +54,19 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
 			log.warn("Could not find duplicate requests with ussd session id '"+request.getUssdRequest().getId()+"' due to error '"+e.getMessage()+"'");
 		}
 		return duplicateRequest;
+	}
+
+	UssdClinicFinder getDuplicateUssdClinicFinder(UssdClinicFinder ussdClinicFinder) {
+		UssdClinicFinder duplicateUssdClinicFinder = null;
+		try {
+			duplicateUssdClinicFinder = ussdClinicFinderRepository.findOneByUssdRequestId(ussdClinicFinder.getUssdRequestId());
+			if (duplicateUssdClinicFinder != null) {
+				log.warn("Not exporting this request to the datamart because one already exists with the same ussd_request_id. "+duplicateUssdClinicFinder);
+			}
+		} catch (Exception e) {
+			log.warn("Could not find duplicate requests with ussd session id '"+ussdClinicFinder.getUssdRequestId()+"' due to error '"+e.getMessage()+"'");
+		}
+		return duplicateUssdClinicFinder;
 	}
 	
 	UssdClinicFinder convertToUssdClinicFinder(Request request) {
