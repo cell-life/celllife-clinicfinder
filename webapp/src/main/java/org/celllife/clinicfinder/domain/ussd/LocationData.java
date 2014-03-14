@@ -44,6 +44,19 @@ public final class LocationData implements Serializable {
         this.yCoordinate = yCoordinate;
     }
 
+    /**
+     * Determines if the x and y coordinates are null or 0 
+     */
+    public boolean isEmpty() {
+    	if (xCoordinate != null && yCoordinate != null) {
+    		if (xCoordinate == 0 && yCoordinate == 0) {
+    			return true;
+    		}
+    		return false;
+    	}
+    	return true;
+    }
+
     @Override
     public String toString() {
         return "LocationData [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + "]";

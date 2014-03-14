@@ -1,7 +1,9 @@
 package org.celllife.clinicfinder.integration.ussd;
 
 import junit.framework.Assert;
+
 import org.apache.commons.io.IOUtils;
+import org.celllife.clinicfinder.domain.ussd.LocationData;
 import org.celllife.clinicfinder.domain.ussd.Request;
 import org.celllife.clinicfinder.domain.ussd.json.Root;
 import org.celllife.clinicfinder.test.TestConfiguration;
@@ -67,5 +69,29 @@ public class UssdSubmissionMediatorIntegrationTest {
         Assert.assertNotNull(request.getLocationData());
         Assert.assertEquals(request.getLocationData().getXCoordinate(), 28.0918827056885);
         Assert.assertEquals(request.getLocationData().getYCoordinate(), -25.892427444458);
+    }
+
+    @Test
+    public void testEmptyLocationData() throws Exception {
+    	LocationData locationData = new LocationData();
+    	Assert.assertTrue("Both null", locationData.isEmpty());
+    	locationData.setXCoordinate(0d);
+    	Assert.assertTrue("One null, one zero", locationData.isEmpty());
+    	locationData.setXCoordinate(10d);
+    	Assert.assertTrue("One null, one not zero", locationData.isEmpty());
+    	locationData.setXCoordinate(0d);
+    	locationData.setYCoordinate(0d);
+    	Assert.assertTrue("Both zero", locationData.isEmpty());
+    }
+
+    @Test
+    public void testNotEmptyLocationData() throws Exception {
+    	LocationData locationData = new LocationData();
+    	locationData.setXCoordinate(0d);
+    	locationData.setYCoordinate(10d);
+    	Assert.assertFalse(locationData.isEmpty());
+    	locationData.setXCoordinate(10d);
+    	locationData.setYCoordinate(10d);
+    	Assert.assertFalse(locationData.isEmpty());
     }
 }
