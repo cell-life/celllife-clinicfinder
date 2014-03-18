@@ -34,7 +34,7 @@ public class UssdRequestApplicationServiceImpl implements UssdRequestApplication
         Request savedRequest = requestRepository.save(saveRequest);
 		UssdClinicFinder ussdClinicFinder = convertToUssdClinicFinder(request);
 		UssdClinicFinder duplicateUssdClinicFinder = getDuplicateUssdClinicFinder(ussdClinicFinder);
-		if (duplicateUssdClinicFinder != null) {
+		if (duplicateUssdClinicFinder == null) {
 			if (log.isTraceEnabled()) {
 				log.trace("converted Request into UssdClinicFinder: "+ ussdClinicFinder);
 			}
