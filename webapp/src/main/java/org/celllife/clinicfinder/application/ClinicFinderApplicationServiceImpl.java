@@ -68,9 +68,16 @@ public class ClinicFinderApplicationServiceImpl implements ClinicFinderApplicati
 	
 	String getSmsText(Clinic clinic) {
 		String address = (clinic.getAddress() == null || clinic.getAddress().trim().isEmpty() ? "Unknown address" : clinic.getAddress());
-		String phone = (clinic.getPhoneNumber() == null || clinic.getPhoneNumber().trim().isEmpty() ? "Unknown telephone number" : clinic.getPhoneNumber());
-		String[] args = new String[] { clinic.getName(), address, phone };
-		String smsText = messageSource.getMessage("clinicSmsText", args, null, null);
+		String phone = (clinic.getPhoneNumber() == null || clinic.getPhoneNumber().trim().isEmpty() ? null : clinic.getPhoneNumber());
+
+		String smsText = null;
+		if (phone == null) {
+		    String[] args = new String[] { clinic.getName(), address };
+		    smsText = messageSource.getMessage("clinicSmsTextNoPhone", args, null, null);
+		} else {
+		    String[] args = new String[] { clinic.getName(), address, phone };
+		    smsText = messageSource.getMessage("clinicSmsText", args, null, null);
+		}
 		log.debug("SmsText="+smsText);
 		return smsText;
 	}

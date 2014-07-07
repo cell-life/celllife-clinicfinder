@@ -122,7 +122,7 @@ public class ClinicFinderApplicationServiceTest {
 		Assert.assertNotNull(smsText);
 		Assert.assertTrue(smsText.contains("Test Clinic"));
 		Assert.assertTrue(smsText.contains("123 Hope Street"));
-		Assert.assertTrue(smsText.contains("Unknown telephone number"));
+		Assert.assertFalse(smsText.contains("Unknown telephone number"));
 	}
 	
 	@Test
