@@ -9,7 +9,7 @@ import java.io.Serializable;
  * operator and msisdn
  */
 @Embeddable
-public final class User implements Serializable {
+public class User implements Serializable {
 
 	private static final long serialVersionUID = -6685209802082539168L;
 

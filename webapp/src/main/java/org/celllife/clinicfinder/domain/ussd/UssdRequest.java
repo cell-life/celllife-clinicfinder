@@ -11,7 +11,7 @@ import java.util.Date;
  * USSD Session entity for the USSD endpoint.
  */
 @Embeddable
-public final class UssdRequest implements Serializable {
+public class UssdRequest implements Serializable {
 
 	private static final long serialVersionUID = 5766201813161201442L;
 
